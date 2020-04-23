@@ -3,6 +3,9 @@
 ## Overview
 Add abstract later
 
+Before training: <img src="./videos/before_train.gif" width="250">
+After training: <img src="./videos/after_train.gif" width="250">
+
 ## Prerequisites:
 * Python 3.6 or lower (pygame is not compatible with Python 3.7)
 * TensorFlow 2.1.0
@@ -40,12 +43,12 @@ logging.basicConfig(
 ```
 
 #### Experiment 1
-DQN algorithm with epsilon-greedy policy. State space is the stack of four latest pre-processed snapshot images of the game. The design is originally from the [awesome work of yenchenlin](https://github.com/yenchenlin/DeepLearningFlappyBird/), but we updated it for TensorFlow 2.1.0. And you can start from any checkpoint by changing the checkpoint name in saved_models/dqn/dqn_epsilon_greedy/checkpoint.                                                                                        
+DQN algorithm with epsilon-greedy policy. State space is the stack of four latest pre-processed snapshot images of the game. The design is originally from the [awesome work of yenchenlin](https://github.com/yenchenlin/DeepLearningFlappyBird/), but we updated it for TensorFlow 2.1.0. And you can start from any checkpoint by changing the checkpoint name. See detailed instructions in readme.txt under empty "saved_models" model.                                                                                        
 ```
 python experiment_1.py
 ```
 #### Experiment 2
-Double DQN algorithm with epsilon-greedy policy. The target model will be updated to be same as the Q model for every C steps. You need to set the parameter C in line 33 (default C=5000). 
+Double DQN algorithm with epsilon-greedy policy. The target model will be updated to be same as the Q model for every C steps. You can change the parameter C in line 33 (default C=5000). 
 ```
 python experiment_2.py
 ```
