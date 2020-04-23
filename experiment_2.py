@@ -30,7 +30,7 @@ FINAL_EPSILON = 0.0001  # final value of epsilon
 INITIAL_EPSILON = 0.1  # starting value of epsilon
 REPLAY_MEMORY = 50000  # number of previous transitions to remember
 BATCH = 32  # size of minibatch
-update_target_estimator_every = 1000
+update_target_estimator_every = 5000
 
 
 class MacOSFile(object):
