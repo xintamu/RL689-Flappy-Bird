@@ -14,8 +14,10 @@ import pickle
 import numpy as np
 from collections import defaultdict
 
-# logging.basicConfig(filename="log.txt", format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO,
-#                     datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(
+    # filename="log_exp5.txt",
+    format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 ACTIONS = 2  # number of valid actions
 GAMMA = 1  # decay rate of past observations

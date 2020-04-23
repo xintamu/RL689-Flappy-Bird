@@ -19,8 +19,10 @@ from collections import deque
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras import layers, models
 
-logging.basicConfig(filename="log.txt", format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO,
-                    datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(
+    # filename="log_exp1.txt",
+    format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 ACTIONS = 2  # number of valid actions
 GAMMA = 0.99  # decay rate of past observations
@@ -117,7 +119,7 @@ def train_network(model):
     s_t = np.stack((x_t, x_t, x_t, x_t), axis=2)
 
     # Include the step in the file name (uses `str.format`)
-    checkpoint_dir = "saved_models/dqn"
+    checkpoint_dir = "saved_models/dqn/experiment_1"
     checkpoint_path = os.path.join(checkpoint_dir, "dqn-{step:09d}.ckpt")
 
     latest = tf.train.latest_checkpoint(checkpoint_dir)
@@ -128,7 +130,10 @@ def train_network(model):
 
         glb_vars_dict = pickle_load(os.path.join(checkpoint_dir, 'glb_vars_dict.pkl'))
 
-        t, success, epsilon, D = glb_vars_dict[latest]
+        try:
+            t, success, epsilon, D = glb_vars_dict[latest]
+        except KeyError:
+            t, success, epsilon, D = glb_vars_dict[latest.replace("dqn/experiment_1", "dqn")]
 
     else:
         glb_vars_dict = {}

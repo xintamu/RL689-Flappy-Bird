@@ -19,8 +19,10 @@ from collections import deque
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras import layers, models
 
-logging.basicConfig(filename="log_target_1000.txt", format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO,
-                    datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(
+    # filename="log_exp2_c5000.txt",
+    format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 ACTIONS = 2  # number of valid actions
 GAMMA = 0.99  # decay rate of past observations
@@ -30,7 +32,7 @@ FINAL_EPSILON = 0.0001  # final value of epsilon
 INITIAL_EPSILON = 0.1  # starting value of epsilon
 REPLAY_MEMORY = 50000  # number of previous transitions to remember
 BATCH = 32  # size of minibatch
-update_target_estimator_every = 5000
+update_target_estimator_every = 5000  # C
 
 
 class MacOSFile(object):
@@ -118,7 +120,7 @@ def train_network(model, target_model):
     s_t = np.stack((x_t, x_t, x_t, x_t), axis=2)
 
     # Include the step in the file name (uses `str.format`)
-    checkpoint_dir = "saved_models/dqn_target"
+    checkpoint_dir = "saved_models/double_dqn/" + "c{}".format(update_target_estimator_every)
     checkpoint_path = os.path.join(checkpoint_dir, "dqn-{step:09d}.ckpt")
 
     latest = tf.train.latest_checkpoint(checkpoint_dir)
@@ -132,7 +134,7 @@ def train_network(model, target_model):
         try:
             t, success, epsilon, D = glb_vars_dict[latest]
         except KeyError:
-            t, success, epsilon, D = glb_vars_dict[latest.replace("dqn_target", "dqn")]
+            t, success, epsilon, D = glb_vars_dict[latest.replace("double_dqn/" + "c{}".format(update_target_estimator_every), "dqn")]
 
     else:
         glb_vars_dict = {}
